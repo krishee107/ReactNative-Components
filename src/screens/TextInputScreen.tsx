@@ -1,22 +1,18 @@
 import React, { useState } from 'react'
-import { KeyboardAvoidingView, Platform, StyleSheet, TextInput, View } from 'react-native'
+import { KeyboardAvoidingView, Platform, StyleSheet, Text, TextInput, View } from 'react-native'
 import { HeaderTitle } from '../components/HeaderTitle'
 import { styles } from '../theme/appTheme'
 import { ScrollView } from 'react-native-gesture-handler'
+import { CustomSwitch } from '../components/CustomSwitch'
+import { useForm } from '../hooks/useForm'
 
 export const TextInputScreen = () => {
-    const [form, setForm] = useState({
+    const { form, onChange, isSubscribed } = useForm({
         name: '',
         email: '',
-        phone: ''
-    })
-
-    const onChange = (value: string, field: keyof typeof form) => {
-        setForm({
-            ...form,
-            [field]: value
-        })
-    }
+        phone: '',
+        isSubscribed: false
+    });
 
     return (
         <KeyboardAvoidingView // Permite hacer scroll cuando el teclado aparece para poder ver los inputs
@@ -59,6 +55,12 @@ export const TextInputScreen = () => {
 
 
                 </View>
+                <View
+                    style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: 10 }}
+                >
+                    <Text style={stylesScreen.switchText}> Suscribirme </Text>
+                    <CustomSwitch isOn={isSubscribed} onChange={(value: boolean) => onChange(value, 'isSubscribed')} />
+                </View>
             </ScrollView>
 
         </KeyboardAvoidingView>
@@ -73,5 +75,8 @@ const stylesScreen = StyleSheet.create({
         paddingHorizontal: 10,
         borderRadius: 10,
         marginVertical: 10
+    },
+    switchText: {
+        fontSize: 25
     }
 })
