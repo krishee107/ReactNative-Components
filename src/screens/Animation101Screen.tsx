@@ -1,8 +1,9 @@
 import React, { useRef, useState } from 'react'
-import { Animated, Button, StyleSheet, View } from 'react-native'
+import { Animated, Button, Easing, StyleSheet, View } from 'react-native'
 
 export const Animation101Screen = () => {
     const opacity = useRef(new Animated.Value(0)).current;
+    const top = useRef(new Animated.Value(-100)).current;
 
     const fadeIn = () => {
         Animated.timing(
@@ -13,6 +14,15 @@ export const Animation101Screen = () => {
                 useNativeDriver: true
             }
         ).start();
+
+        Animated.timing(
+            top,
+            {
+                toValue: 0,
+                duration: 700,
+                useNativeDriver: true,
+                easing: Easing.bounce // Para que rebote al final
+            }).start();
     }
 
     const fadeOut = () => {
@@ -24,6 +34,15 @@ export const Animation101Screen = () => {
                 useNativeDriver: true
             }
         ).start();
+
+        Animated.timing(
+            top,
+            {
+                toValue: -100,
+                duration: 700,
+                useNativeDriver: true,
+                easing: Easing.bounce // Para que rebote al final
+            }).start();
     }
 
     return (
@@ -31,7 +50,10 @@ export const Animation101Screen = () => {
             <Animated.View style={{
                 ...styles.purpleBox,
                 marginBottom: 20,
-                opacity: opacity
+                opacity: opacity,
+                transform: [{
+                    translateY: top
+                }]
             }} />
 
             <Button
