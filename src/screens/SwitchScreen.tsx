@@ -28,21 +28,21 @@ export const SwitchScreen = () => {
             <HeaderTitle title="Switches:" />
 
             <View
-                style={{ flexDirection: 'row', justifyContent: 'space-between' }}
+                style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: 10 }}
             >
                 <Text style={styles.switchText}> isActive </Text>
                 <CustomSwitch isOn={isActive} onChange={(value) => onChange(value, 'isActive')} />
             </View>
 
             <View
-                style={{ flexDirection: 'row', justifyContent: 'space-between' }}
+                style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: 10 }}
             >
                 <Text style={styles.switchText}> isHungry </Text>
                 <CustomSwitch isOn={isHungry} onChange={(value) => onChange(value, 'isHungry')} />
             </View>
 
             <View
-                style={{ flexDirection: 'row', justifyContent: 'space-between' }}
+                style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: 10 }}
             >
                 <Text style={styles.switchText}> isHappy </Text>
                 <CustomSwitch isOn={isHappy} onChange={(value) => onChange(value, 'isHappy')} />
