@@ -1,10 +1,23 @@
 import React, { useState } from 'react'
-import { Platform, Switch, View } from 'react-native'
+import { Platform, StyleSheet, Switch, Text, View } from 'react-native'
 import { HeaderTitle } from '../components/HeaderTitle';
+import { CustomSwitch } from '../components/CustomSwitch';
 
 export const SwitchScreen = () => {
-    const [isEnabled, setIsEnabled] = useState(false);
-    const toggleSwitch = () => setIsEnabled(!isEnabled);
+    const [state, setState] = useState({
+        isActive: true,
+        isHungry: false,
+        isHappy: true
+    })
+
+    const { isActive, isHungry, isHappy } = state;
+
+    const onChange = (value: boolean, field: keyof typeof state) => {
+        setState({
+            ...state,
+            [field]: value
+        })
+    }
 
     return (
         <View
@@ -13,16 +26,40 @@ export const SwitchScreen = () => {
             }}
         >
             <HeaderTitle title="Switches:" />
-            <Switch
-                trackColor={{ false: "#d9d9db", true: "#5856D6" }} // Color of the switch track
-                thumbColor={
-                    Platform.OS === "android" ? "#5856D6" : "" // Color of the switch thumb 
-                } // Only for Android devices, it is the color of the switch
-                //ios_backgroundColor="#3e3e3e" // Only for iOS devices, it is the color of the background of the switch
-                onValueChange={toggleSwitch} // Function to execute when the switch is pressed
-                value={isEnabled} // Boolean value to determine if the switch is on or off
-            />
+
+            <View
+                style={{ flexDirection: 'row', justifyContent: 'space-between' }}
+            >
+                <Text style={styles.switchText}> isActive </Text>
+                <CustomSwitch isOn={isActive} onChange={(value) => onChange(value, 'isActive')} />
+            </View>
+
+            <View
+                style={{ flexDirection: 'row', justifyContent: 'space-between' }}
+            >
+                <Text style={styles.switchText}> isHungry </Text>
+                <CustomSwitch isOn={isHungry} onChange={(value) => onChange(value, 'isHungry')} />
+            </View>
+
+            <View
+                style={{ flexDirection: 'row', justifyContent: 'space-between' }}
+            >
+                <Text style={styles.switchText}> isHappy </Text>
+                <CustomSwitch isOn={isHappy} onChange={(value) => onChange(value, 'isHappy')} />
+            </View>
+
+
+
+            <Text style={styles.switchText}>
+                {JSON.stringify(state, null, 5)}
+            </Text>
 
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    switchText: {
+        fontSize: 25
+    }
+});
